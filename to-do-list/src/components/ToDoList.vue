@@ -10,10 +10,14 @@
   <h2>Task List</h2>
 
   <ul>
-    <li v-for="tarea in listaDeTareas">
-      {{ tarea }}
+    <li v-for="(tarea, index) in listaDeTareas" v-bind:key="index">
+      {{ index }}-{{ tarea }}
+      <button v-on:click="eliminarElemento(index)">Delete</button>
     </li>
   </ul>
+  <pre>
+    {{ listaDeTareas }}
+  </pre>
 </template>
 
 <script>
@@ -28,7 +32,12 @@ export default {
 
   methods: {
     agregarElemento() {
-      alert('hola')
+      this.listaDeTareas.push(this.tareaNueva)
+    },
+
+    eliminarElemento(index) {
+      //   alert('Eliminar elemento en la posición #' + index)
+      this.listaDeTareas.splice(index, 1)
     },
   },
 }
