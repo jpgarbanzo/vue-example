@@ -15,9 +15,16 @@
       <button v-on:click="eliminarElemento(index)">Delete</button>
     </li>
   </ul>
-  <pre>
+
+  <h2>Tareas eliminadas</h2>
+  <ul>
+    <li v-for="(tarea, index) in tareasEliminadas" v-bind:key="index">{{ index }}-{{ tarea }}</li>
+  </ul>
+
+  <!-- <pre>
     {{ listaDeTareas }}
   </pre>
+  <pre> {{ tareasEliminadas }}</pre> -->
 </template>
 
 <script>
@@ -38,6 +45,8 @@ export default {
 
     eliminarElemento(index) {
       //   alert('Eliminar elemento en la posición #' + index)
+      this.tareasEliminadas.push(this.listaDeTareas[index])
+
       this.listaDeTareas.splice(index, 1)
     },
   },
