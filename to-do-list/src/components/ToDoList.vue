@@ -27,6 +27,7 @@ export default {
       titulo: 'Aprendizaje de Vue',
       listaDeTareas: ['Instalar Vue', 'Abrirlo en el navegador'],
       tareaNueva: 'La tarea que crea la persona',
+      tareasEliminadas: [],
     }
   },
 
