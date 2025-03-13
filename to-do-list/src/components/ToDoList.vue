@@ -8,7 +8,7 @@
   <h2>Task List</h2>
 
   <ul>
-    <li>wash dishes</li>
+    <li>{{ listaDeTareas }}</li>
   </ul>
 </template>
 
