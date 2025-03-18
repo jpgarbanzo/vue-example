@@ -5,8 +5,6 @@
     <button v-on:click="agregarElemento">Add</button>
   </div>
 
-  {{ tareaNueva }}
-
   <h2>Tareas Pendientes</h2>
 
   <ul>
@@ -17,18 +15,21 @@
   </ul>
 
   <h2>Tareas Completadas</h2>
-  <ul>
-    <li v-for="(tarea, index) in tareasEliminadas" v-bind:key="index">{{ index }}-{{ tarea }}</li>
+  <p v-if="contadorDeTareasCompletadas === 0">
+    <span>No hay tareas completadas</span>
+  </p>
+  <ul v-else style="min-height: 100px; background-color: green">
+    <li v-for="(tarea, index) in tareasCompletadas" v-bind:key="index">{{ index }}-{{ tarea }}</li>
   </ul>
 
   <h2>Resumen de tareas</h2>
-  <p>Completadas: {{ tareasCompletadas }} | Pendientes: {{ tareasPendientes }}</p>
+  <p>Completadas: {{ contadorDeTareasCompletadas }} | Pendientes: {{ tareasPendientes }}</p>
   <p>Total de tareas: {{ totalDeTareas }}</p>
 
   <!-- <pre>
     {{ listaDeTareas }}
   </pre>
-  <pre> {{ tareasEliminadas }}</pre> -->
+  <pre> {{ tareasCompletadas }}</pre> -->
 </template>
 
 <script>
@@ -37,8 +38,8 @@ export default {
     return {
       titulo: 'Aprendizaje de Vue',
       listaDeTareas: ['Instalar Vue', 'Abrirlo en el navegador'],
-      tareaNueva: 'La tarea que crea la persona',
-      tareasEliminadas: [],
+      tareaNueva: '',
+      tareasCompletadas: [],
     }
   },
 
@@ -47,12 +48,12 @@ export default {
       return this.listaDeTareas.length
     },
 
-    tareasCompletadas() {
-      return this.tareasEliminadas.length
+    contadorDeTareasCompletadas() {
+      return this.tareasCompletadas.length
     },
 
     totalDeTareas() {
-      return this.tareasPendientes + this.tareasCompletadas
+      return this.tareasPendientes + this.contadorDeTareasCompletadas
     },
   },
 
@@ -63,7 +64,7 @@ export default {
 
     eliminarElemento(index) {
       //   alert('Eliminar elemento en la posición #' + index)
-      this.tareasEliminadas.push(this.listaDeTareas[index])
+      this.tareasCompletadas.push(this.listaDeTareas[index])
 
       this.listaDeTareas.splice(index, 1)
     },
