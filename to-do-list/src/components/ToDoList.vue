@@ -12,6 +12,7 @@
   <ul v-else>
     <li v-for="(tarea, index) in listaDeTareas" v-bind:key="index">
       {{ index }}-{{ tarea }}
+      <button v-on:click="editarElemento(tarea)">Editar</button>
       <button v-on:click="eliminarElemento(index)">Completar</button>
     </li>
   </ul>
@@ -29,7 +30,8 @@
   <p>Total de tareas: {{ totalDeTareas }}</p>
 
   <hr />
-  <editor-de-to-do-list />
+  Quiero editar la tarea: {{ tareaQueEstoyEditando }}
+  <editor-de-to-do-list v-if="mostrarEditor" v-bind:tarea="tareaQueEstoyEditando" />
 
   <!-- <pre>
     {{ listaDeTareas }}
@@ -47,6 +49,9 @@ export default {
       listaDeTareas: ['Instalar Vue', 'Abrirlo en el navegador'],
       tareaNueva: '',
       tareasCompletadas: [],
+
+      mostrarEditor: false,
+      tareaQueEstoyEditando: '',
     }
   },
 
@@ -74,6 +79,11 @@ export default {
       this.tareasCompletadas.push(this.listaDeTareas[index])
 
       this.listaDeTareas.splice(index, 1)
+    },
+
+    editarElemento(tarea) {
+      this.mostrarEditor = true
+      this.tareaQueEstoyEditando = tarea
     },
   },
 
