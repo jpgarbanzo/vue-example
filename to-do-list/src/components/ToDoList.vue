@@ -6,8 +6,10 @@
   </div>
 
   <h2>Tareas Pendientes</h2>
-
-  <ul>
+  <p v-if="tareasPendientes === 0">
+    <span>No hay tareas pendientes</span>
+  </p>
+  <ul v-else>
     <li v-for="(tarea, index) in listaDeTareas" v-bind:key="index">
       {{ index }}-{{ tarea }}
       <button v-on:click="eliminarElemento(index)">Completar</button>
@@ -26,6 +28,9 @@
   <p>Completadas: {{ contadorDeTareasCompletadas }} | Pendientes: {{ tareasPendientes }}</p>
   <p>Total de tareas: {{ totalDeTareas }}</p>
 
+  <hr />
+  <editor-de-to-do-list />
+
   <!-- <pre>
     {{ listaDeTareas }}
   </pre>
@@ -33,6 +38,8 @@
 </template>
 
 <script>
+import EditorDeToDoList from './EditorDeToDoList.vue'
+
 export default {
   data() {
     return {
@@ -68,6 +75,10 @@ export default {
 
       this.listaDeTareas.splice(index, 1)
     },
+  },
+
+  components: {
+    'editor-de-to-do-list': EditorDeToDoList,
   },
 }
 </script>
