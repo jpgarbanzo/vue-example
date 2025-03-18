@@ -7,19 +7,23 @@
 
   {{ tareaNueva }}
 
-  <h2>Task List</h2>
+  <h2>Tareas Pendientes</h2>
 
   <ul>
     <li v-for="(tarea, index) in listaDeTareas" v-bind:key="index">
       {{ index }}-{{ tarea }}
-      <button v-on:click="eliminarElemento(index)">Delete</button>
+      <button v-on:click="eliminarElemento(index)">Completar</button>
     </li>
   </ul>
 
-  <h2>Tareas eliminadas</h2>
+  <h2>Tareas Completadas</h2>
   <ul>
     <li v-for="(tarea, index) in tareasEliminadas" v-bind:key="index">{{ index }}-{{ tarea }}</li>
   </ul>
+
+  <h2>Resumen de tareas</h2>
+  <p>Completadas: {{ tareasCompletadas }} | Pendientes: {{ tareasPendientes }}</p>
+  <p>Total de tareas: {{ totalDeTareas }}</p>
 
   <!-- <pre>
     {{ listaDeTareas }}
@@ -36,6 +40,20 @@ export default {
       tareaNueva: 'La tarea que crea la persona',
       tareasEliminadas: [],
     }
+  },
+
+  computed: {
+    tareasPendientes() {
+      return this.listaDeTareas.length
+    },
+
+    tareasCompletadas() {
+      return this.tareasEliminadas.length
+    },
+
+    totalDeTareas() {
+      return this.tareasPendientes + this.tareasCompletadas
+    },
   },
 
   methods: {
