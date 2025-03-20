@@ -12,7 +12,7 @@
   <ul v-else>
     <li v-for="(tarea, index) in listaDeTareas" v-bind:key="index">
       {{ index }}-{{ tarea }}
-      <button v-on:click="editarElemento(tarea)">Editar</button>
+      <button v-on:click="editarElemento(index, tarea)">Editar</button>
       <button v-on:click="eliminarElemento(index)">Completar</button>
     </li>
   </ul>
@@ -31,7 +31,13 @@
 
   <hr />
   Quiero editar la tarea: {{ tareaQueEstoyEditando }}
-  <editor-de-to-do-list v-if="mostrarEditor" v-bind:tarea="tareaQueEstoyEditando" />
+  <editor-de-to-do-list
+    v-if="mostrarEditor"
+    v-bind:tarea="tareaQueEstoyEditando"
+    v-bind:indice="indiceQueEstoyEditando"
+    v-bind:fecha="fechaDeHoy"
+    v-bind:textoDeEjmplo="titulo"
+  />
 
   <!-- <pre>
     {{ listaDeTareas }}
@@ -52,6 +58,9 @@ export default {
 
       mostrarEditor: false,
       tareaQueEstoyEditando: '',
+      indiceQueEstoyEditando: null,
+
+      fechaDeHoy: '19 de marzo de 2025',
     }
   },
 
@@ -81,9 +90,10 @@ export default {
       this.listaDeTareas.splice(index, 1)
     },
 
-    editarElemento(tarea) {
+    editarElemento(index, tarea) {
       this.mostrarEditor = true
       this.tareaQueEstoyEditando = tarea
+      this.indiceQueEstoyEditando = index
     },
   },
 
