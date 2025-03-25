@@ -35,8 +35,7 @@
     v-if="mostrarEditor"
     v-bind:tarea="tareaQueEstoyEditando"
     v-bind:indice="indiceQueEstoyEditando"
-    v-bind:fecha="fechaDeHoy"
-    v-bind:textoDeEjmplo="titulo"
+    v-on:edit="actualizarToDoList"
   />
 
   <!-- <pre>
@@ -94,6 +93,10 @@ export default {
       this.mostrarEditor = true
       this.tareaQueEstoyEditando = tarea
       this.indiceQueEstoyEditando = index
+    },
+
+    actualizarToDoList({ tarea, indice }) {
+      alert('actualizar todo list desde el padre, tarea:' + tarea + ' ' + indice)
     },
   },
 
