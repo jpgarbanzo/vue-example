@@ -1,9 +1,9 @@
 <template>
   <section>
     <h1>Editar to-do: {{ indice }}-{{ tarea }}</h1>
-    <input v-bind:value="tarea" />
+    <input v-model="valorActualizado" />
     <button v-on:click="notificarPadre">Guardar</button>
-
+    <h2>Valor nuevo es: {{ valorActualizado }}</h2>
     <!-- <h1>{{ textoDeEjmplo }}</h1> -->
   </section>
 </template>
@@ -25,12 +25,26 @@ export default {
     // },
   },
 
+  mounted() {
+    this.valorActualizado = this.tarea
+  },
+
+  data() {
+    return {
+      valorActualizado: '',
+    }
+  },
+
   methods: {
     notificarPadre() {
       this.$emit('edit', {
-        tarea: this.tarea,
+        tarea: this.valorActualizado,
         indice: this.indice,
       })
+    },
+
+    actualiceValor(valorDelInput) {
+      this.valorActualizado += valorDelInput.data
     },
   },
 }

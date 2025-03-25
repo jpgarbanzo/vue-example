@@ -97,6 +97,8 @@ export default {
 
     actualizarToDoList({ tarea, indice }) {
       alert('actualizar todo list desde el padre, tarea:' + tarea + ' ' + indice)
+
+      this.listaDeTareas[indice] = tarea
     },
   },
 
