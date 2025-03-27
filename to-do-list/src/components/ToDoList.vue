@@ -1,11 +1,10 @@
 <template>
   <h1>{{ titulo }}</h1>
   <div class="formulario">
-    <input v-model="tareaNueva" />
-    <button v-on:click="agregarElemento" :disabled="deshabilitar">Add</button>
+    <input v-model="tareaNueva" v-on:keydown.enter="agregarElemento" />
+    <button v-on:click="agregarElemento" v-bind:disabled="deshabilitar">Add</button>
   </div>
-
-  {{ tareaNueva }}
+  <mensaje-de-error ref="mensaje" />
 
   <h2>Tareas Pendientes</h2>
   <p v-if="tareasPendientes === 0">
@@ -38,6 +37,7 @@
     v-bind:tarea="tareaQueEstoyEditando"
     v-bind:indice="indiceQueEstoyEditando"
     v-on:edit="actualizarToDoList"
+    v-bind:tareaNueva="tareaNueva"
   />
 
   <!-- <pre>
@@ -48,6 +48,7 @@
 
 <script>
 import EditorDeToDoList from './EditorDeToDoList.vue'
+import MensajeDeError from './MensajeDeError.vue'
 
 export default {
   data() {
@@ -84,6 +85,7 @@ export default {
   methods: {
     agregarElemento() {
       this.listaDeTareas.push(this.tareaNueva)
+      this.tareaNueva = ''
     },
 
     eliminarElemento(index) {
@@ -107,9 +109,13 @@ export default {
   },
 
   watch: {
-    persona: {
+    tareaNueva: {
       immediate: true,
       handler() {
+        if (this.$refs.mensaje) {
+          this.$refs.mensaje.validar(this.tareaNueva)
+        }
+
         if (this.tareaNueva.length === 0) {
           this.deshabilitar = true
         } else if (this.tareaNueva.length > 100) {
@@ -123,6 +129,7 @@ export default {
 
   components: {
     'editor-de-to-do-list': EditorDeToDoList,
+    'mensaje-de-error': MensajeDeError,
   },
 }
 </script>
