@@ -2,8 +2,10 @@
   <h1>{{ titulo }}</h1>
   <div class="formulario">
     <input v-model="tareaNueva" />
-    <button v-on:click="agregarElemento">Add</button>
+    <button v-on:click="agregarElemento" :disabled="deshabilitar">Add</button>
   </div>
+
+  {{ tareaNueva }}
 
   <h2>Tareas Pendientes</h2>
   <p v-if="tareasPendientes === 0">
@@ -60,6 +62,8 @@ export default {
       indiceQueEstoyEditando: null,
 
       fechaDeHoy: '19 de marzo de 2025',
+
+      deshabilitar: false,
     }
   },
 
@@ -99,6 +103,21 @@ export default {
       alert('actualizar todo list desde el padre, tarea:' + tarea + ' ' + indice)
 
       this.listaDeTareas[indice] = tarea
+    },
+  },
+
+  watch: {
+    persona: {
+      immediate: true,
+      handler() {
+        if (this.tareaNueva.length === 0) {
+          this.deshabilitar = true
+        } else if (this.tareaNueva.length > 100) {
+          this.deshabilitar = true
+        } else {
+          this.deshabilitar = false
+        }
+      },
     },
   },
 
